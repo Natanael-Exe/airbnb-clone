@@ -1,0 +1,30 @@
+@import url('/fonts/stylesheet.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rdrDefinedRangesWrapper{
+  width: auto !important;
+}
+
+.btn{
+  @apply px-4 py-2 border border-gray-400 text-sm rounded-full cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transition transform duration-100 ease-out font-light;
+}
+
+#nprogress .bar {
+  background: #FD5B61 !important;
+  /* z-index:calc(1000000 * 999) !important; */
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #FD5B61, 0 0 5px #FD5B61 !important;
+}
+#nprogress .spinner-icon {
+  border-top-color: #FD5B61 !important;
+  border-left-color: #FD5B61 !important;
+}
+
+.mapboxgl-popup-content{
+  padding:0 !important;
+  border-radius: 0.5rem !important;
+ }
