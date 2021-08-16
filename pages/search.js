@@ -1,4 +1,4 @@
-import {useState,useEffect} from "react"
+import {useState,useEffect,useRef} from "react"
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { format } from "date-fns";
@@ -7,23 +7,11 @@ import InfoCard from "../components/InfoCard";
 import Map from "../components/Map"
 import Amadeus from "amadeus"
 import cities from "../utils/cities.json"
+import {MapIcon} from "@heroicons/react/solid";
 
-const Search = ({searchResults,hotelOffers}) => {
-  const amadeus = new Amadeus({
-    clientId: 'RazDfTnL3iaZOInTUhfkguqecdVhQx3p',
-    clientSecret: 'w2bjJZ793VEkWYt6'
-  });
-
-console.log(hotelOffers)
-  // useEffect(()=>{
-  //   const fecthData = async ()=>{
-  //     amadeus.shopping.hotelOffers.get({
-  //       cityCode : 'new'.toUpperCase()
-  //     }).then(result=>console.log("amedeus:",result?.data))
-  //   }
-  //   fecthData()
-  // },[])
-
+const Search = ({searchResults}) => {
+  const [reloadMap,setReloadMap] = useState(false);
+  const [showList,setShowList] = useState(true);
   const router = useRouter();
   const { location, startDate, endDate, guestNumber } = router.query;
   const [hoverItem,setHoverItem]= useState("");
@@ -37,15 +25,27 @@ console.log(hotelOffers)
     : "";
 
   const range = `${formattedStartDate} - ${formattedEndDate}`;
+
+  const numberOfPage = Math.floor(searchResults.length / 20);
+  const [active, setActive] = useState(1);
+  const refTop = useRef(false);
+
+  const slicedData = searchResults.length > 20 ? searchResults?.slice(20 * active - 20, 20 * active):searchResults;
   
+ useEffect(()=>{
+  setReloadMap(true);
+  setTimeout(() => {
+    setReloadMap(false);
+  }, 50);
+ },[location,showList])
 
   return (
     <div className="min-h-screen flex flex-col ">
       <Header
         placeholder={`${location}  |  ${range}  |  ${guestNumber} guests`}
       />
-      <main className="flex-auto flex">
-        <section className="flex-grow pt-12 px-6">
+      {searchResults.length ? <main className="flex-auto flex">
+        {showList && <section className="flex-grow pt-12 px-6 relative">
           <p className="text-sm font-light text-gray-800">
             300+ stays · {range} · {guestNumber} guests{" "}
           </p>
@@ -63,8 +63,8 @@ console.log(hotelOffers)
             Review COVID-19 travel restrictions before you book.{" "}
             <span className="cursor-pointer underline">Learn more</span>
           </h2>
-          <div className="flex flex-col  my-6 space-y-6">
-            {searchResults.map((item,index)=>
+          <div className="flex flex-col  my-6 space-y-6" ref={refTop}>
+            {slicedData.map((item,index)=>
             <InfoCard 
             onMouseOver={()=>setHoverItem(item)}  
             onMouseLeave={()=>setHoverItem("")}
@@ -73,11 +73,42 @@ console.log(hotelOffers)
             />
             )}
           </div>
+          {/* Pagination section */}
+          <div className="flex items-center gap-x-4 gap-y-4 flex-wrap w-full py-10 mx-auto justify-center">
+          {Array(numberOfPage)
+            .fill()
+            .map((_, index) => (
+              <button
+                onClick={() => {
+                  setActive(index + 1);
+                  window.scrollTo({ top: 200, behavior: "smooth" });
+                }}
+                className={` shadow-sm px-4 py-2 block hover:bg-gray-900 hover:text-white  rounded-full focus:outline-none ${
+                  active == index + 1
+                    ? "bg-gray-900 text-white"
+                    : "text-gray-900 bg-gray-100"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+        </div>
+        {/* Button to Show map on mobile  */}
+        <div className="flex items-center sticky inset-x-0 bottom-10 bg-gray-900 px-4 py-3 text-white rounded-full w-24 justify-center mx-auto cursor-pointer md:hidden"
+        onClick={()=>setShowList(!showList)}
+        >
+            <p className="text-sm font-light">Map</p> <MapIcon className="h-5 ml-1"/>
+        </div>
+        </section>}
+        <section className={` lg:inline-flex ${!showList ?"w-full flex-1":"xl:min-w-[600px] hidden"}  h-[90vh] sticky top-16 transition duration-200`}>
+          { !reloadMap && <Map setShowList={setShowList} showList={showList} searchResults={slicedData} hoverItem={hoverItem}/>}
         </section>
-        <section className="hidden lg:inline-flex xl:min-w-[600px] h-[90vh] sticky top-16 transition duration-200">
-          <Map searchResults={searchResults} hoverItem={hoverItem}/>
-        </section>
-      </main>
+      </main>:
+      <div className="flex items-center justify-center h-[70vh]">
+          <p>Nothing found for this City! verify your city name or try another.</p>
+      </div>
+      }
+      
       <div className="bg-gray-100">
          <Footer/>
        </div>
@@ -89,30 +120,37 @@ export default Search;
 export const getServerSideProps  = async ({query})=>{
   const {location}=query
   const amadeus = new Amadeus({
-    clientId: 'RazDfTnL3iaZOInTUhfkguqecdVhQx3p',
-    clientSecret: 'w2bjJZ793VEkWYt6'
+    clientId: process.env.API_KEY,
+    clientSecret: process.env.API_SECRET,
+    hostname:"production"
   });
 
     let city = cities.find(item =>item?.City?.toLowerCase().includes(location?.toLowerCase()));
 
-   const hotelOffers = (await amadeus
+   let hotelOffers;
+    await amadeus
     .shopping
     .hotelOffers
     .get({
-      cityCode : city.Code
+      cityCode : city?.Code
     })
-    .then(({data})=>data)
-    .catch(err=>console.log(err))) || [];
+    .then((response)=>{
+      hotelOffers = response.data 
+      return amadeus.next(response);
+    })
+    // .then(function(nextResponse){
+    //  console.log(nextResponse.data); // second page
+    // })
+    .catch(err=>console.log(err));
   //const searchResult = response?.data 
-  console.log(hotelOffers)
+  //console.log(hotelOffers)
 
  const searchResults = await fetch('https://links.papareact.com/isz')
  .then(res=>res.json())||[]
 
  return{
    props:{
-    searchResults,
-    hotelOffers:response
+    searchResults:hotelOffers||[],
    }
  }
 }

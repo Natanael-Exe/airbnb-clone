@@ -18,7 +18,8 @@ function Header({placeholder}) {
   const [endDate, setEndDate] = useState(new Date());
   const [guestNumber, setGustNumber] = useState(1);
 
-  const router = useRouter()
+  const router = useRouter();
+  const {location} = router.query
   const selectDateRange = {
     startDate,
     endDate,
@@ -51,7 +52,7 @@ function Header({placeholder}) {
       <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer hover:shadow-md">
         <input
           type="text"
-          placeholder={placeholder||"Start your search "}
+          placeholder={placeholder||"Search by city name"}
           className="md:pl-5 pl-2 bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
@@ -67,7 +68,7 @@ function Header({placeholder}) {
       space-x-2 items-center justify-end text-gray-900"
       >
         <p className="hidden md:inline text-sm font-medium px-4 hover:bg-gray-100 py-2 rounded-full cursor-pointer">Become a host</p>
-        <GlobeAltIcon className="h-5 flex-shrink-0 font-light text-gray-700" />
+        <GlobeAltIcon className="h-9 flex-shrink-0 font-light text-gray-700 hover:bg-gray-100 p-2 rounded-full cursor-pointer" />
         <div className="flex items-center border rounded-full py-0.5 px-0.5 hover:shadow-md">
           <MenuIcon className="h-5 ml-2 mr-1 cursor-pointer text-gray-500" />
           <UserCircleIcon className="h-9 cursor-pointer ml-1 text-gray-500" />
@@ -106,7 +107,7 @@ function Header({placeholder}) {
                 endDate:endDate.toISOString(),
                 guestNumber
               }
-            });setSearchInput("")}}>Search</button>
+            });setSearchInput("");}}>Search</button>
           </div>
         </div>
       )}

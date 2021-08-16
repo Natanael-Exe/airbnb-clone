@@ -3,10 +3,13 @@ import {useRouter} from "next/router"
 import ReactMapGL,{Marker,Popup} from 'react-map-gl';
 import getCenter from "geolib/es/getCenter"
 import ModalCard from "./ModalCard"
-import {ChevronLeftIcon,PlusIcon,MinusIcon} from "@heroicons/react/solid"
+import {ChevronLeftIcon,ChevronRightIcon,PlusIcon,MinusIcon} from "@heroicons/react/solid"
 
-function Map({searchResults,hoverItem}) {
-  const coords = searchResults?.map(item=>({longitude:item.long,latitude:item.lat}));
+function Map({searchResults,hoverItem,setShowList,showList}) {
+  const coords = searchResults?.map(item=>({
+    longitude:item?.hotel?.longitude,
+    latitude:item?.hotel?.latitude
+    }));
   const [selectedLocation,setSelectedLocation] = useState("")
   const [isChecked,setIsChecked] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +21,7 @@ function Map({searchResults,hoverItem}) {
     height: "100%",
     longitude:  center.longitude,
     latitude: center.latitude,
-    zoom: 11
+    zoom: 12
   });
 
   const wrapperRef = useRef(null);
@@ -33,11 +36,20 @@ function Map({searchResults,hoverItem}) {
     mapboxApiAccessToken={process.env.mapbox_key}
     className="relative"
    >
-    <div className="absolute flex justify-between items-start p-6 drop-shadow-md w-full">
-      <ChevronLeftIcon 
-      className="h-10 p-2 bg-white rounded-lg cursor-pointer"
-      onClick={()=>router.push("/")}
-      />
+    <div className="absolute flex justify-between items-start p-6 drop-shadow-md w-full z-30">
+      {showList ?
+        <ChevronLeftIcon 
+        className="h-10 p-2 bg-white rounded-lg cursor-pointer"
+        onClick={()=>setShowList(!showList)}
+        />
+        :
+        <div className="flex items-center bg-white rounded-lg cursor-pointer p-2 "
+        onClick={()=>setShowList(!showList)}
+        >
+        <ChevronRightIcon className="h-6"/> <p className="mr-1">Show list</p>
+        </div>
+        
+      }
       <div className="flex py-2 px-4 bg-white rounded-lg items-center">
         <input type="checkbox" 
         defaultChecked={isChecked}
@@ -56,10 +68,10 @@ function Map({searchResults,hoverItem}) {
       </div>
     </div> 
    {searchResults?.map(item=>
-   <div key={item.long}>
+   <div key={item?.hotel?.name}>
      <Marker
-     longitude={item.long}
-     latitude={item.lat}
+     longitude={item?.hotel?.longitude}
+     latitude={item?.hotel?.latitude}
      offsetLeft={-20}
      offsetTop={-10}
      
@@ -68,15 +80,15 @@ function Map({searchResults,hoverItem}) {
        role="img"
        aria-label="push-pin"
        onClick={()=>{setSelectedLocation(item);setShowModal(true)}} 
-       className={`py-1 px-2 ${item.long === hoverItem?.long ?"bg-gray-900 text-white scale-105 duration-100":"bg-white text-gray-800 duration-200"}  font-semibold rounded-full shadow-md cursor-pointer hover:scale-105 transition  z-10 hover:z-50`}
+       className={`py-1 px-2 ${item?.hotel?.name === hoverItem?.hotel?.name ?"bg-gray-900 text-white scale-105 duration-100":"bg-white text-gray-800 duration-200"}  font-semibold rounded-full shadow-md cursor-pointer hover:scale-105 transition  z-10 hover:z-50`}
        >
-         {item.price.replace("/ night","")}
+         $ {Math.floor(item.offers[0].price.total)}
        </p>
      </Marker>
       <div ref={wrapperRef}>
       { 
        showModal 
-       && selectedLocation?.long === item.long 
+       && selectedLocation?.hotel?.name === item?.hotel?.name
        && (
           <Popup
           //onClose={()=>{setSelectedLocation("");setShowModal(false)}}
@@ -84,8 +96,8 @@ function Map({searchResults,hoverItem}) {
           className="relative"
           closeButton={false}
           sortByDepth={false}
-          latitude={item.lat}
-          longitude={item.long}
+          longitude={item?.hotel?.longitude}
+          latitude={item?.hotel?.latitude}
           >
           <ModalCard 
           setSelectedLocation={setSelectedLocation}
