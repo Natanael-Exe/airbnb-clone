@@ -40,7 +40,7 @@ function Header({placeholder}) {
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-4 md:px-16">
       {/* left */}
-      <div className="relative flex items-center h-10 cursor-pointer my-auto" >
+      <div className="relative flex items-center h-10 cursor-pointer my-auto pr-2 md:pr-0 w-10/12 md:w-auto" >
         <Image
           src="https://links.papareact.com/qd3"
           layout="fill"
@@ -50,11 +50,11 @@ function Header({placeholder}) {
         />
       </div>
       {/* middle -search */}
-      <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer hover:shadow-md">
+      <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent">
         <input
           type="text"
           placeholder={placeholder||"Search by city name"}
-          className="md:pl-5 pl-2 bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black"
+          className="md:pl-5 pl-2 bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black "
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
@@ -72,7 +72,7 @@ function Header({placeholder}) {
         <GlobeAltIcon className="h-9 flex-shrink-0 font-light text-gray-700 hover:bg-gray-100 p-2 rounded-full cursor-pointer" />
         <div className="flex items-center border rounded-full py-0.5 px-0.5 hover:shadow-md">
           <MenuIcon className="h-5 ml-2 mr-1 cursor-pointer text-gray-500" />
-          <UserCircleIcon className="h-9 cursor-pointer ml-1 text-gray-500" />
+          <UserCircleIcon className="md:h-9 h-7 cursor-pointer md:ml-1 text-gray-500" />
         </div>
       </div>
       {searchInput && (
