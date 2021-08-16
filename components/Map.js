@@ -32,7 +32,7 @@ function Map({searchResults,hoverItem,setShowList,showList}) {
     <ReactMapGL
     {...viewport}
     onViewportChange={nextViewport => setViewport(nextViewport)}
-    mapStyle="mapbox://styles/natanael509/cksavin0q1g9q17quec1muogr"
+    mapStyle={process.env.site_url}
     mapboxApiAccessToken={process.env.mapbox_key}
     className="relative"
    >

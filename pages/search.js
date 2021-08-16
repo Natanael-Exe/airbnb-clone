@@ -145,8 +145,8 @@ export const getServerSideProps  = async ({query})=>{
   //const searchResult = response?.data 
   //console.log(hotelOffers)
 
- const searchResults = await fetch('https://links.papareact.com/isz')
- .then(res=>res.json())||[]
+//  const searchResults = await fetch('https://links.papareact.com/isz')
+//  .then(res=>res.json())||[]
 
  return{
    props:{
