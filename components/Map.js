@@ -6,6 +6,7 @@ import ModalCard from "./ModalCard"
 import {ChevronLeftIcon,ChevronRightIcon,PlusIcon,MinusIcon} from "@heroicons/react/solid"
 
 function Map({searchResults,hoverItem,setShowList,showList}) {
+
   const coords = searchResults?.map(item=>({
     longitude:item?.hotel?.longitude,
     latitude:item?.hotel?.latitude
@@ -14,7 +15,8 @@ function Map({searchResults,hoverItem,setShowList,showList}) {
   const [isChecked,setIsChecked] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const center = getCenter(coords);
- const router = useRouter()
+  const router = useRouter();
+  const refTop = useRef(false);
 
   const [viewport, setViewport] = useState({
     width: "100%",
@@ -35,22 +37,23 @@ function Map({searchResults,hoverItem,setShowList,showList}) {
     mapStyle={process.env.site_url}
     mapboxApiAccessToken={process.env.mapbox_key}
     className="relative"
+    ref={refTop}
    >
     <div className="absolute flex justify-between items-start p-6 drop-shadow-md w-full z-30">
       {showList ?
         <ChevronLeftIcon 
         className="h-10 p-2 bg-white rounded-lg cursor-pointer"
-        onClick={()=>setShowList(!showList)}
+        onClick={()=>{setShowList(!showList);window.scrollTo({ top: 0, behavior: "smooth" });}}
         />
         :
         <div className="flex items-center bg-white rounded-lg cursor-pointer p-2 "
         onClick={()=>setShowList(!showList)}
         >
-        <ChevronRightIcon className="h-6"/> <p className="mr-1">Show list</p>
+        <ChevronRightIcon className="h-6"/> <p className="mr-1 text-sm text-light">Show list</p>
         </div>
         
       }
-      <div className="flex py-2 px-4 bg-white rounded-lg items-center">
+      <div className="md:flex py-2 px-4 bg-white rounded-lg items-center hidden text-sm text-light">
         <input type="checkbox" 
         defaultChecked={isChecked}
         onChange={(e)=>setIsChecked(e.target.value)}
