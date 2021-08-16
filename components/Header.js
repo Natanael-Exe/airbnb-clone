@@ -58,7 +58,7 @@ function Header({placeholder}) {
       <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent overflow-hidden">
         <input
           type="text"
-          placeholder={placeholder||"Search by city name"}
+          placeholder={placeholder||"Search by city"}
           className="md:pl-5 px-2 md:pr-0 bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black "
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
@@ -77,7 +77,7 @@ function Header({placeholder}) {
         <GlobeAltIcon className="h-9 flex-shrink-0 font-light text-gray-700 hover:bg-gray-100 p-2 rounded-full cursor-pointer" />
         <div className="flex items-center border rounded-full py-0.5 px-0.5 hover:shadow-md">
           <MenuIcon className="h-5 ml-2 mr-1 cursor-pointer text-gray-500" />
-          <UserCircleIcon className="md:h-9 h-7 cursor-pointer md:ml-1 text-gray-500" />
+          <UserCircleIcon className="md:h-9 h-8 cursor-pointer md:ml-1 text-gray-500" />
         </div>
       </div>
       {searchInput && (

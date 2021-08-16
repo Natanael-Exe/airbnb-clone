@@ -95,7 +95,7 @@ const Search = ({searchResults}) => {
         </div>
         {/* Button to Show map on mobile  */}
         <div className="flex items-center sticky inset-x-0 bottom-10 bg-gray-900 px-4 py-3 text-white rounded-full w-24 justify-center mx-auto cursor-pointer md:hidden"
-        onClick={()=>setShowList(!showList)}
+        onClick={()=>{setShowList(!showList);window.scrollTo({ top:0, behavior: "smooth" });}}
         >
             <p className="text-sm font-light">Map</p> <MapIcon className="h-5 ml-1"/>
         </div>
