@@ -9,7 +9,7 @@ import {useRouter} from "next/router"
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-
+import Head from "next/head";
 import { useState } from "react";
 
 function Header({placeholder}) {
@@ -38,6 +38,11 @@ function Header({placeholder}) {
     setGustNumber(1)
   }
   return (
+    <>
+     <Head> 
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      </Head>
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-4 md:px-16">
       {/* left */}
       <div className="relative flex items-center h-10 cursor-pointer my-auto pr-2 md:pr-0 w-10/12 md:w-auto" >
@@ -50,11 +55,11 @@ function Header({placeholder}) {
         />
       </div>
       {/* middle -search */}
-      <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent">
+      <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent overflow-hidden">
         <input
           type="text"
           placeholder={placeholder||"Search by city name"}
-          className="md:pl-5 pl-2 bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black "
+          className="md:pl-5 px-2 md:pr-0 bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black "
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
@@ -113,6 +118,7 @@ function Header({placeholder}) {
         </div>
       )}
     </header>
+    </>
   );
 }
 
