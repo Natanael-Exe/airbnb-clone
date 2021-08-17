@@ -142,7 +142,7 @@ export const getServerSideProps  = async ({query})=>{
     })
     .then((response)=>{
       hotelOffers = response.data 
-      return amadeus.next(response);
+      //return amadeus.next(response);
     })
     // .then(function(nextResponse){
     //  console.log(nextResponse.data); // second page
