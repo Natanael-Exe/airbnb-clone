@@ -5,7 +5,7 @@ import getCenter from "geolib/es/getCenter"
 import ModalCard from "./ModalCard"
 import {ChevronLeftIcon,ChevronRightIcon,PlusIcon,MinusIcon} from "@heroicons/react/solid"
 
-function Map({searchResults,hoverItem,setShowList,showList}) {
+function Map({searchResults,hoverItem,setShowList,showList,windowPostion,setWindowPosition}) {
 
   const coords = searchResults?.map(item=>({
     longitude:item?.hotel?.longitude,
@@ -17,6 +17,7 @@ function Map({searchResults,hoverItem,setShowList,showList}) {
   const center = getCenter(coords);
   const router = useRouter();
   const refTop = useRef(false);
+  
 
   const [viewport, setViewport] = useState({
     width: "100%",
@@ -26,9 +27,19 @@ function Map({searchResults,hoverItem,setShowList,showList}) {
     zoom: 12
   });
 
+  
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowModal);
 
+
+  // useEffect(()=>{
+  //   if(!showList && refTop.current){
+  //     refTop.current.windOffset=window.scrollY;
+  //     document.body.setAttribute("style",`position:fixed;top:-${refTop.current.windOffset}px;left:0;right:0`)
+   
+  //   }
+  // },[showList,refTop])
+  //console.log("offset:",refTop.current);
   return (
    
     <ReactMapGL
@@ -43,11 +54,27 @@ function Map({searchResults,hoverItem,setShowList,showList}) {
       {showList ?
         <ChevronLeftIcon 
         className="h-10 p-2 bg-white rounded-lg cursor-pointer"
-        onClick={()=>{setShowList(!showList);window.scrollTo({ top: 0, behavior: "smooth" });}}
+        onClick={()=>{
+          //setWindowPosition(window.scrollY);
+          setShowList(!showList);
+          // refTop.current.windOffset = window.scrollY;
+          
+          // document.body
+          // .setAttribute(
+          //   "style",
+          //   `position:fixed;top:-${refTop.current.windOffset}px;left:0;right:0`
+          // )
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         />
         :
         <div className="flex items-center bg-white rounded-lg cursor-pointer p-2 "
-        onClick={()=>setShowList(!showList)}
+        onClick={()=>{
+          // document.body.setAttribute("style","");
+          // window.scrollTo(0,refTop?.current?.windOffset);
+          setShowList(!showList)
+          //window.scrollTo({ top: windowPostion, behavior: "smooth" });     
+        }}
         >
         <ChevronRightIcon className="h-6"/> <p className="mr-1 text-sm text-light">Show list</p>
         </div>

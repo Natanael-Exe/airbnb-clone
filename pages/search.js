@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import InfoCard from "../components/InfoCard";
 import Map from "../components/Map"
 import Amadeus from "amadeus"
-import cities from "../utils/cities.json"
+//import cities from "../utils/cities.json"
 import {MapIcon} from "@heroicons/react/solid";
 
 const Search = ({searchResults}) => {
@@ -16,7 +16,9 @@ const Search = ({searchResults}) => {
   const router = useRouter();
   const { location, startDate, endDate, guestNumber } = router.query;
   const [hoverItem,setHoverItem]= useState("");
+  const [windowPostion,setWindowPosition]= useState("")
 
+  const infoCardRef=useRef(false);
   const formattedStartDate = startDate
     ? format(new Date(startDate), "dd MMMM yy")
     : "";
@@ -40,6 +42,11 @@ const Search = ({searchResults}) => {
   }, 50);
  },[location,showList])
 
+ useEffect(()=>{
+
+ },[])
+
+
   return (
     <div className="min-h-screen flex flex-col ">
       <Head>
@@ -53,7 +60,7 @@ const Search = ({searchResults}) => {
       {searchResults.length ? <main className="flex-auto flex">
         {showList && <section className="flex-grow pt-12 px-6 relative">
           <p className="text-sm font-light text-gray-800">
-            300+ stays · {range} · {guestNumber} guests{" "}
+            {searchResults?.length} stays · {range} · {guestNumber} guests{" "}
           </p>
           <h1 className="text-3xl font-semibold mt-2 mb-6">
             Stays in {location}
@@ -71,12 +78,15 @@ const Search = ({searchResults}) => {
           </h2>
           <div className="flex flex-col  my-6 space-y-6" ref={refTop}>
             {slicedData.map((item,index)=>
-            <InfoCard 
+            <div ref={infoCardRef}>
+              <InfoCard 
             onMouseOver={()=>setHoverItem(item)}  
             onMouseLeave={()=>setHoverItem("")}
             key={index} 
             item={item}
+
             />
+            </div>
             )}
           </div>
           {/* Pagination section */}
@@ -107,11 +117,18 @@ const Search = ({searchResults}) => {
         </div>
         </section>}
         <section className={` lg:inline-flex ${!showList ?"w-full flex-1":"xl:min-w-[600px] hidden"}  h-[90vh] sticky top-16 transition duration-200`}>
-          { !reloadMap && <Map setShowList={setShowList} showList={showList} searchResults={slicedData} hoverItem={hoverItem}/>}
+          { !reloadMap && <Map 
+          setShowList={setShowList}
+           showList={showList}
+          searchResults={slicedData}
+             hoverItem={hoverItem}
+             setWindowPosition={setWindowPosition}
+             windowPostion={windowPostion}
+             />}
         </section>
       </main>:
       <div className="flex items-center justify-center h-[70vh]">
-          <p>Nothing found for this City! verify your city name or try another.</p>
+          <p className="px-4 text-center">No stay found for this location please verify your location.</p>
       </div>
       }
       
@@ -124,30 +141,44 @@ const Search = ({searchResults}) => {
 export default Search;
 
 export const getServerSideProps  = async ({query})=>{
-  const {location}=query
-  const amadeus = new Amadeus({
-    clientId: process.env.API_KEY,
-    clientSecret: process.env.API_SECRET,
-    hostname:"production"
-  });
+  const {location}=query;
 
-    let city = cities.find(item =>item?.City?.toLowerCase().includes(location?.toLowerCase()));
+  const coordonates = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${process.env.GOOGLE_PLACE_GOCODING_API_KEY}`).then(response => response.json()).catch(err => console.log(err))
 
-   let hotelOffers;
-    await amadeus
-    .shopping
-    .hotelOffers
-    .get({
-      cityCode : city?.Code
-    })
-    .then((response)=>{
-      hotelOffers = response.data 
-      //return amadeus.next(response);
-    })
-    // .then(function(nextResponse){
-    //  console.log(nextResponse.data); // second page
-    // })
-    .catch(err=>console.log(err));
+  //console.log(coordonates?.results[0]?.geometry?.location)
+  let hotelOffers;
+
+   if(coordonates?.results.length){
+        const amadeus = new Amadeus({
+        clientId: process.env.API_KEY,
+        clientSecret: process.env.API_SECRET,
+        hostname:"production"
+        });
+        
+        await amadeus
+        .shopping
+        .hotelOffers
+        .get({
+          latitude:coordonates?.results[0]?.geometry?.location.lat,
+          longitude:coordonates?.results[0]?.geometry?.location.lng
+        })
+        .then((response)=>{
+          hotelOffers = response.data 
+          //return amadeus.next(response);
+        })
+        // .then(function(nextResponse){
+        //  console.log(nextResponse.data); // second page
+        // })
+        .catch(err=>console.log(err));
+
+   }else{
+    let hotelOffers=[]
+   }
+  
+
+    // let city = cities.find(item =>item?.City?.toLowerCase().includes(location?.toLowerCase()));
+
+   
   //const searchResult = response?.data 
   //console.log(hotelOffers)
 

@@ -33,7 +33,7 @@ return(
           <span>{item?.offers[0].room.typeEstimated?.beds} bed</span> · 1 batch
           {item?.hotel?.amenities?.slice(0,4).map(item=><span className="lowercase" key={item}> · {item}</span>)}...
         </p>
-        <div className="flex justify-between items-end md:-mb-1">
+        <div className="flex justify-between items-end md:-mb-1 mt-2">
           <p className="flex items-center"><StarIcon className="h-5 text-red-400 mr-0.5"/>
            {item.hotel.rating} <span className="ml-1 text-gray-500 text-sm font-light">(25 reviews)</span>
           </p>
