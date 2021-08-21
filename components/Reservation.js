@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { HeartIcon,ChevronDownIcon } from "@heroicons/react/outline";
-import {GiCutDiamond} from "react-icons/Gi"
-import {MdFlag} from "react-icons/Md"
+import {GiCutDiamond} from "react-icons/gi"
+import {MdFlag} from "react-icons/md"
 import { useState } from "react";
 
 const Reservation=({pricePerNight,startDate,endDate,guestNumber,numberOfNights,weeklyDiscount,total})=>{
