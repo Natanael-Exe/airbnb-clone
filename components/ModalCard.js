@@ -20,8 +20,8 @@ const ModalCard =({selectedLocation})=>{
                     <span className="text-sm font-light">{selectedLocation?.hotel.rating}</span> 
                    <span className="ml-1 text-gray-500 text-sm font-light">(25)</span>
                 </p>
-                <h4 className="pt-2 font-light">{selectedLocation?.hotel?.name}</h4>
-                <p className="pt-1">${selectedLocation?.offers[0].price.total}</p>
+                <h4 className="pt-2 font-light">{selectedLocation?.hotel?.name}</h4> 
+                <p className="pt-1">${Math.round(selectedLocation.offers[0].price.total)}</p>
              </div>
 
           </div>

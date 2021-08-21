@@ -3,7 +3,7 @@ import {HeartIcon} from "@heroicons/react/outline"
 import {StarIcon} from "@heroicons/react/solid"
 import {useRouter} from "next/router"
 
-const InfoCard =({item,onMouseOver,onMouseLeave})=>{
+const InfoCard =({item,onMouseOver,onMouseLeave,onClick})=>{
   const router= useRouter()
   const {guestNumber} = router.query;
 
@@ -11,6 +11,7 @@ return(
   <div 
   onMouseOver={onMouseOver}
   onMouseLeave={onMouseLeave}
+ onClick={onClick}
   className="flex md:flex-row flex-col border-b pb-6 cursor-pointer hover:opacity-90 md:hover:shadow-lg px-2 md:pr-4 md:hover:rounded-xl transition duration-200 ease-out">
     <div className="relative h-[25vh] w-sm md:h-[12.6rem] md:w-[18.7rem] flex-shrink-0"> 
       <Image 
@@ -39,8 +40,8 @@ return(
           </p>
 
           <div>
-          <p>${item.offers[0].price.total} /night</p>
-          <p className="text-gray-500 font-light text-sm text-right underline cursor-pointer">${item.offers[0].price.total}</p>
+          <p>${Math.round(item.offers[0].price.total)} /night</p>
+          <p className="text-gray-500 font-light text-sm text-right underline cursor-pointer">${Math.round(item.offers[0].price.total)}</p>
         </div>
         </div>
         

@@ -10,7 +10,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      borderWidth:['group-focus']
+    },
   },
-  plugins: [require("tailwind-scrollbar-hide"),require('@tailwindcss/custom-forms'),],
+  plugins: [require("tailwind-scrollbar-hide"),require('@tailwindcss/custom-forms'), require("tailwindcss-line-clamp"),],
 };

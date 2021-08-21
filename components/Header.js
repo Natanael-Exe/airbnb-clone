@@ -20,11 +20,11 @@ function Header({placeholder}) {
 
   const router = useRouter();
   const {location} = router.query
-  const selectDateRange = {
-    startDate,
-    endDate,
-    key: "selection",
-  };
+    const selectDateRange = {
+      startDate,
+      endDate,
+      key: "selection",
+    };
 
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection?.startDate);
@@ -55,11 +55,11 @@ function Header({placeholder}) {
         />
       </div>
       {/* middle -search */}
-      <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent overflow-hidden">
+      <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent overflow-hidden ">
         <input
           type="text"
           placeholder={placeholder||"Search by City"}
-          className="md:pl-5 px-2 md:pr-0 bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black "
+          className="md:pl-5 px-2 md:pr-0  bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black w-11/12 truncate md:w-auto"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
@@ -87,7 +87,7 @@ function Header({placeholder}) {
             minDate={new Date()}
             rangeColors={["#FD5B61"]}
             onChange={handleSelect}
-            className="flex md:block flex-wrap flex-col-reverse md:flex-row"
+            className="flex md:block  flex-col-reverse md:flex-row"
             //showMonthAndYearPickers={false}
           />
           <div className="flex items-center mt-2 border-b mb-4">

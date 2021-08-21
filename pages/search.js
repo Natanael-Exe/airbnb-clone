@@ -42,10 +42,8 @@ const Search = ({searchResults}) => {
   }, 50);
  },[location,showList])
 
- useEffect(()=>{
-
- },[])
-
+ 
+console.log(searchResults)
 
   return (
     <div className="min-h-screen flex flex-col ">
@@ -84,7 +82,15 @@ const Search = ({searchResults}) => {
             onMouseLeave={()=>setHoverItem("")}
             key={index} 
             item={item}
-
+            onClick={()=>{router.push({
+              pathname:"/rooms",
+              query:{
+                hotelId:item?.hotel?.hotelId,
+                startDate,
+                endDate,
+                guestNumber
+              }
+            });}}
             />
             </div>
             )}
@@ -172,7 +178,7 @@ export const getServerSideProps  = async ({query})=>{
         .catch(err=>console.log(err));
 
    }else{
-    let hotelOffers=[]
+    hotelOffers = []
    }
   
 

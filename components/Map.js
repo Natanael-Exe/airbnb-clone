@@ -112,7 +112,7 @@ function Map({searchResults,hoverItem,setShowList,showList,windowPostion,setWind
        onClick={()=>{setSelectedLocation(item);setShowModal(true)}} 
        className={`py-1 px-2 ${item?.hotel?.name === hoverItem?.hotel?.name ?"bg-gray-900 text-white scale-105 duration-100":"bg-white text-gray-800 duration-200"}  font-semibold rounded-full shadow-md cursor-pointer hover:scale-105 transition  z-10 hover:z-50`}
        >
-         $ {Math.floor(item.offers[0].price.total)}
+         $ {Math.round(item.offers[0].price.total)}
        </p>
      </Marker>
       <div ref={wrapperRef}>
