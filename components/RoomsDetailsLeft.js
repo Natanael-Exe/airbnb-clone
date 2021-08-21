@@ -10,6 +10,11 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { format, formatDistance } from "date-fns";
 import { FaRegKeyboard } from "react-icons/fa";
+import {
+  HeartIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/outline";
 
 const RoomsDetailsLeft = ({
   roomsDetails,
@@ -23,7 +28,7 @@ const RoomsDetailsLeft = ({
 }) => {
   const router = useRouter();
   const { guestNumber } = router.query;
-
+  const [showMore, setShowMore] = useState(false);
   const cancelDate = roomsDetails?.offers[0]?.policies?.cancellation?.deadline;
   const formatedCancelDate = cancelDate
     ? format(new Date(cancelDate), "MMM dd")
@@ -54,7 +59,7 @@ const RoomsDetailsLeft = ({
           <div>
             <h3 className=" font-medium">Entire home</h3>
             <p className="text-sm font-light text-gray-500 mt-1">
-              You’ll have the apartment to yourself.
+            You’ll have the serviced apartment to yourself.
             </p>
           </div>
         </div>
@@ -90,7 +95,7 @@ const RoomsDetailsLeft = ({
         </div>
       </div>
 
-      <ul className="font-light text-gray-900 mt-6 pb-6 border-b">
+      {/* <ul className="font-light text-gray-900 mt-6 pb-6 border-b">
         <li>- 2 minutes walk to Farringdon Station</li>
         <li>- Single flat</li>
         <li>- Exclusive high speed Wi-Fi router in studio</li>
@@ -98,7 +103,19 @@ const RoomsDetailsLeft = ({
         <li>- Full functional kitchen</li>
         <li>- Desk space</li>
         <li>- Gym, laundry available on site</li>
-      </ul>
+      </ul> */}
+      <div className="mt-6 pb-6 border-b">
+       <p className={`font-light my-3 ${!showMore ? "clamp-3" : ""}`}>
+            {roomsDetails?.hotel?.description?.text}
+          </p>
+          <p
+            className="inline-flex underline items-center cursor-pointer"
+            onClick={() => setShowMore((prevState) => !prevState)}
+          >
+            {showMore ?"Show less":"Show more"} <ChevronRightIcon className="w-5 h-5 ml-1" />
+        </p> 
+      </div>
+      
 
       <div className="mt-12 pb-6 border-b">
         <h2 className="text-xl font-medium  mb-6">What this place offers</h2>

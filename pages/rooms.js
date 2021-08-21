@@ -34,7 +34,7 @@ const Rooms = ({ roomsDetails }) => {
   const [startDate, setStartDate] = useState(new Date(userStartDate));
   const [endDate, setEndDate] = useState(new Date(userEndDate));
 
-  const [showMore, setShowMore] = useState(false);
+  
   const formattedStartDate = startDate ? format(startDate, "dd MMMM yy") : "";
 
   const formattedEndDate = endDate ? format(endDate, "dd MMMM yy") : "";
@@ -112,14 +112,14 @@ const Rooms = ({ roomsDetails }) => {
         {/* gallery section */}
         <section className="mt-5">
           <div className="grid grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-xl relative">
-            <div className="rounded-lg border border-black bg-white px-4 py-2 flex items-center absolute bottom-6 right-6 z-20 cursor-pointer">
+            <div className="rounded-lg border border-black bg-white px-2 md:px-4 py-1  md:py-2 flex items-center absolute  bottom-6 right-6 z-20 cursor-pointer">
               <BsGrid3X3Gap className="w-4 h-4 mr-2" />
               <p className="text-sm">Show all photos</p>
             </div>
             {roomsDetails?.hotel?.media.map((item, index) =>
               index == 0 ? (
                 <div
-                  className={`relative h-[50vh] ${
+                  className={`relative md:h-[50vh] h-[30vh] ${
                     roomsDetails?.hotel?.media.length == 1
                       ? "col-span-4"
                       : "col-span-2"
@@ -225,7 +225,7 @@ const Rooms = ({ roomsDetails }) => {
         <hr className="my-10 " />
         <section className="mb-8">
           <h2 className="text-xl font-medium ">Where you’ll be</h2>
-          <div className="w-full xl:min-w-[600px] h-[70vh] pt-4 pb-8">
+          <div className="w-full xl:min-w-[600px] md:h-[70vh] h-[50vh] pt-4 pb-8">
             <ReactMapGL
               {...viewport}
               onViewportChange={(nextViewport) => setViewport(nextViewport)}
@@ -252,12 +252,12 @@ const Rooms = ({ roomsDetails }) => {
               {roomsDetails?.hotel?.address?.cityName?.toLowerCase()}{" "}
             </span>
           </h3>
-          <p className={`font-light my-3 ${!showMore ? "clamp-3" : ""}`}>
-            {roomsDetails?.hotel?.description?.text}
+          <p className={`font-light my-3 clamp-3`}>
+            {roomsDetails?.hotel?.name} is one the best place to live because it is gated, private and very affluent neighborhood to spend you special moment.
           </p>
           <p
             className="inline-flex underline items-center cursor-pointer"
-            onClick={() => setShowMore((prevState) => !prevState)}
+            //onClick={() => setShowMore((prevState) => !prevState)}
           >
             Show more <ChevronRightIcon className="w-5 h-5 ml-1" />
           </p>
