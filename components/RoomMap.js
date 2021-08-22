@@ -33,7 +33,7 @@ const RoomMap=({roomsDetails})=> {
               //ref={refTop}
             >
               <div className="absolute p-6 drop-shadow-md top-0 right-0 z-30 flex items-start">
-                  <div className="md:flex py-2 px-4 bg-white rounded-lg items-center hidden text-sm text-light mr-4">
+                  <div className="flex py-2 px-4 bg-white rounded-lg items-center text-sm text-light mr-4">
                     <input type="checkbox" 
                     defaultChecked={isChecked}
                     onChange={(e)=>setIsChecked(e.target.value)}
