@@ -27,13 +27,13 @@ return(
           <p className="font-light text-gray-500 text-sm lowercase">{item?.hotel?.address?.lines[0]}</p>
           <HeartIcon className="md:h-12 h-10 cursor-pointer md:-mt-2 p-2 rounded-full md:hover:bg-gray-100 -mr-2"/>
         </div>
-        <h4 className="text-xl font-light">{item?.hotel?.name}</h4>
+        <h4 className="text-xl font-light capitalize">{item?.hotel?.name?.toLowerCase()}</h4>
         <div className="border-b w-9 pt-2"/>
         <p className="text-sm pt-2 text-gray-500 font-light flex-grow">
           <span>{guestNumber} guests</span> ·
-          <span>{item?.offers[0].room.typeEstimated?.beds} bedroom</span> · 
-          <span>{item?.offers[0].room.typeEstimated?.beds} bed</span> · 1 batch
-          {item?.hotel?.amenities?.slice(0,4).map(item=><span className="lowercase" key={item}> · {item}</span>)}...
+          {" "}<span>{item?.offers[0].room.typeEstimated?.beds} bedroom</span> · 
+          {" "}<span>{item?.offers[0].room.typeEstimated?.beds} bed</span> · 1 batch
+          {item?.hotel?.amenities?.slice(0,4).map(item=><span className="lowercase" key={item}> · {" "}{item?.split('_')?.join(' ')}</span>)}...
         </p>
         <div className="flex justify-between items-end md:-mb-1 mt-2">
           <p className="flex items-center"><StarIcon className="h-5 text-red-400 mr-0.5"/>
