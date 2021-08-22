@@ -107,7 +107,7 @@ const RoomsDetailsLeft = ({
         <li>- Desk space</li>
         <li>- Gym, laundry available on site</li>
       </ul> */}
-      <div className="mt-6 pb-6 border-b">
+      {roomsDetails?.hotel?.description?.text && <div className="mt-6 pb-6 border-b">
        <p className={`font-light my-3 ${!showMore ? "clamp-3" : ""}`}>
             {roomsDetails?.hotel?.description?.text}
           </p>
@@ -117,15 +117,15 @@ const RoomsDetailsLeft = ({
           >
             {showMore ?"Show less":"Show more"} <ChevronRightIcon className="w-5 h-5 ml-1" />
         </p> 
-      </div>
+      </div>}
       
 
       <div className="mt-12 pb-6 border-b">
         <h2 className="text-xl font-medium  mb-6">What this place offers</h2>
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {amenities?.map((item) => (
             <div
-              className="capitalize flex items-center font-light text-gray-900"
+              className="capitalize flex items-center font-light text-gray-900 col-span-2 md:col-span-1"
               key={item}
             >
               <BiBadgeCheck className="w-6 h-6 mr-2 flex-shrink-0" />
