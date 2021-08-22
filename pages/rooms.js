@@ -172,7 +172,7 @@ const Rooms = ({ roomsDetails }) => {
 
         {/* Reservation call action */}
         {showButtonReservation && (
-          <div className="z-40 fixed bottom-0 w-screen inset-x-0 flex items-center py-3 px-4 border-t bg-white justify-between md:hidden">
+          <div className="z-40 fixed bottom-0 w-screen inset-x-0 flex items-center p-4 border-t bg-white justify-between md:hidden">
             <div>
               <p className="font-semibold">
                 ${pricePerNight}{" "}
@@ -187,7 +187,7 @@ const Rooms = ({ roomsDetails }) => {
               </p>
             </div>
             <button
-              className="px-6 py-3  text-white rounded-lg bg-gradient-to-r from-red-600 to-pink-700 mr-4"
+              className="px-6 py-3  text-white rounded-lg bg-gradient-to-r from-red-600 to-pink-700 mr-2"
               onClick={() => {
                 setShowButtonReservation(false);
                 document?.getElementById("reservation")?.scrollIntoView({behavior: "smooth", block: "start", inline: "center"});
