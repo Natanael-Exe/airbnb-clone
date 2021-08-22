@@ -198,7 +198,7 @@ const Rooms = ({ roomsDetails }) => {
           </div>
         )}
       </main>
-      <div className="bg-gray-100">
+      <div className="bg-gray-100 pb-20 md:pb-0">
         <Footer />
       </div>
     </div>
