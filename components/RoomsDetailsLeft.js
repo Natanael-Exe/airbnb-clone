@@ -8,11 +8,10 @@ import { AiOutlineClear, AiOutlineCalendar } from "react-icons/ai";
 import { RiDoorClosedLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { format, formatDistance } from "date-fns";
+import { format } from "date-fns";
 import { FaRegKeyboard } from "react-icons/fa";
 import {
-  HeartIcon,
-  ChevronDownIcon,
+
   ChevronRightIcon,
 } from "@heroicons/react/outline";
 
@@ -29,10 +28,14 @@ const RoomsDetailsLeft = ({
   const router = useRouter();
   const { guestNumber } = router.query;
   const [showMore, setShowMore] = useState(false);
+  const [showMoreAminities, setShowMoreAminities] = useState(false);
   const cancelDate = roomsDetails?.offers[0]?.policies?.cancellation?.deadline;
   const formatedCancelDate = cancelDate
     ? format(new Date(cancelDate), "MMM dd")
     : "";
+
+    const amenities = showMoreAminities ? roomsDetails?.hotel?.amenities : roomsDetails?.hotel?.amenities?.slice(0, 10);
+
 
   return (
     <>
@@ -120,18 +123,18 @@ const RoomsDetailsLeft = ({
       <div className="mt-12 pb-6 border-b">
         <h2 className="text-xl font-medium  mb-6">What this place offers</h2>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          {roomsDetails?.hotel?.amenities?.slice(0, 10).map((item) => (
+          {amenities?.map((item) => (
             <div
               className="capitalize flex items-center font-light text-gray-900"
               key={item}
             >
               <BiBadgeCheck className="w-6 h-6 mr-2" />
-              <p>{item.toLowerCase()}</p>
+              <p>{item?.split('_')?.join(' ')?.toLowerCase()}</p>
             </div>
           ))}
-          <div className="mt-4 pb-6">
+          <div className="mt-4 pb-6 col-span-2">
             {roomsDetails?.hotel?.amenities.length && (
-              <p className="px-4 py-2 rounded-md border border-black  inline cursor-pointer hover:underline">
+              <p className="px-4 py-2 rounded-md border border-black  inline cursor-pointer hover:underline" onClick={()=>setShowMoreAminities(prev=>!prev)}>
                 Show all {roomsDetails?.hotel?.amenities.length} amenities
               </p>
             )}
