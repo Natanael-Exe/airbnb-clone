@@ -135,7 +135,7 @@ const RoomsDetailsLeft = ({
           <div className="mt-4 pb-6 col-span-2">
             {roomsDetails?.hotel?.amenities.length && (
               <p className="px-4 py-2 rounded-md border border-black  inline cursor-pointer hover:underline" onClick={()=>setShowMoreAminities(prev=>!prev)}>
-                Show all {roomsDetails?.hotel?.amenities.length} amenities
+                {showMoreAminities?"Show less":`Show all ${roomsDetails?.hotel?.amenities.length} amenities`}
               </p>
             )}
           </div>

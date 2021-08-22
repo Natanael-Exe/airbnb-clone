@@ -80,7 +80,7 @@ const Reservation=({pricePerNight,startDate,endDate,numberOfNights,weeklyDiscoun
               </div>
 
              <button className="text-center w-full rounded-lg my-4 py-3 text-white bg-gradient-to-r from-red-500 to-pink-700">Reserve</button>
-             <p className="pb-3 font-light text-center text-sm">You won't be charged yet</p>
+             <p className="pb-4 font-light text-center text-sm">You won't be charged yet</p>
 
               <div className="flex items-center justify-between font-light pb-2">
                 <p className="underline cursor-pointer ">${pricePerNight} x {numberOfNights} nights</p>
