@@ -31,7 +31,7 @@ const Reservation=({pricePerNight,startDate,endDate,numberOfNights,weeklyDiscoun
                  </p>
                </div>
 
-              <div className="border rounded-md mt-4 border-gray-400 group">
+              <div className="border rounded-md mt-4 border-gray-400 group" >
                 <button className={`${isButtonFocused ?"":"border-b" }  group-focus:border-none focus:border-2 focus:border-black focus:rounded-md flex items-center cursor-pointer border-gray-400 w-full`}
                 onClick={()=>document?.getElementById('date-range-picker')?.scrollIntoView()}
                 >
@@ -79,7 +79,7 @@ const Reservation=({pricePerNight,startDate,endDate,numberOfNights,weeklyDiscoun
                 </div>
               </div>
 
-             <button className="text-center w-full rounded-lg my-4 py-3 text-white bg-gradient-to-r from-red-500 to-pink-700">Reserve</button>
+             <button className="text-center w-full rounded-lg my-4 py-3 text-white bg-gradient-to-r from-red-500 to-pink-700"     >Reserve</button>
              <p className="pb-4 font-light text-center text-sm">You won't be charged yet</p>
 
               <div className="flex items-center justify-between font-light pb-2">
