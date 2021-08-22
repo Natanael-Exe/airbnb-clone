@@ -128,7 +128,7 @@ const RoomsDetailsLeft = ({
               className="capitalize flex items-center font-light text-gray-900"
               key={item}
             >
-              <BiBadgeCheck className="w-6 h-6 mr-2" />
+              <BiBadgeCheck className="w-6 h-6 mr-2 flex-shrink-0" />
               <p>{item?.split('_')?.join(' ')?.toLowerCase()}</p>
             </div>
           ))}
