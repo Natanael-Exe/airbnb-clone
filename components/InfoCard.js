@@ -11,7 +11,8 @@ return(
   <div 
   onMouseOver={onMouseOver}
   onMouseLeave={onMouseLeave}
- onClick={onClick}
+  onClick={onClick}
+  id={item?.hotel?.hotelId}
   className="flex md:flex-row flex-col border-b pb-6 cursor-pointer hover:opacity-90 md:hover:shadow-lg px-2 md:pr-4 md:hover:rounded-xl transition duration-200 ease-out">
     <div className="relative h-[25vh] w-sm md:h-[12.6rem] md:w-[18.7rem] flex-shrink-0"> 
       <Image 

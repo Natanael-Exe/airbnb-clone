@@ -42,11 +42,11 @@ const RoomsDetailsLeft = ({
             Entire rental unit hosted by Vikki
           </h2>
           <p className="font-light">
-            <span>{guestNumber} guests</span> ·
-            <span>
+            <span>{guestNumber} guests</span> ·{" "}
+            <span >
               {roomsDetails?.offers[0].room.typeEstimated?.beds} bedroom
             </span>{" "}
-            ·<span>{roomsDetails?.offers[0].room.typeEstimated?.beds} bed</span>{" "}
+            · {" "}<span >{roomsDetails?.offers[0].room.typeEstimated?.beds} bed</span>{" "}
             · 1 batch
           </p>
         </div>
@@ -139,7 +139,7 @@ const RoomsDetailsLeft = ({
         </div>
       </div>
 
-      <div className="mt-12 ">
+      <div className="mt-12 " id="date-range-picker">
         <h2 className="font-medium text-xl">
           {numberOfNights} nights in Greater London
         </h2>

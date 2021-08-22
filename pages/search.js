@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import InfoCard from "../components/InfoCard";
 import Map from "../components/Map"
 import Amadeus from "amadeus"
+import VisibilitySensor from 'react-visibility-sensor';
 //import cities from "../utils/cities.json"
 import {MapIcon} from "@heroicons/react/solid";
 
@@ -16,9 +17,8 @@ const Search = ({searchResults}) => {
   const router = useRouter();
   const { location, startDate, endDate, guestNumber } = router.query;
   const [hoverItem,setHoverItem]= useState("");
-  const [windowPostion,setWindowPosition]= useState("")
+  const [elemInView,setElemInView] = useState("");
 
-  const infoCardRef=useRef(false);
   const formattedStartDate = startDate
     ? format(new Date(startDate), "dd MMMM yy")
     : "";
@@ -42,8 +42,7 @@ const Search = ({searchResults}) => {
   }, 50);
  },[location,showList])
 
- 
-console.log(searchResults)
+
 
   return (
     <div className="min-h-screen flex flex-col ">
@@ -76,23 +75,23 @@ console.log(searchResults)
           </h2>
           <div className="flex flex-col  my-6 space-y-6" ref={refTop}>
             {slicedData.map((item,index)=>
-            <div ref={infoCardRef}>
+            <VisibilitySensor  onChange={(isVisible)=>isVisible && setElemInView(item?.hotel?.hotelId)}>
               <InfoCard 
-            onMouseOver={()=>setHoverItem(item)}  
-            onMouseLeave={()=>setHoverItem("")}
-            key={index} 
-            item={item}
-            onClick={()=>{router.push({
-              pathname:"/rooms",
-              query:{
-                hotelId:item?.hotel?.hotelId,
-                startDate,
-                endDate,
-                guestNumber
-              }
-            });}}
+              onMouseOver={()=>setHoverItem(item)}  
+              onMouseLeave={()=>setHoverItem("")}
+              key={item?.hotel?.hotelId} 
+              item={item}
+              onClick={()=>{router.push({
+                pathname:"/rooms",
+                query:{
+                  hotelId:item?.hotel?.hotelId,
+                  startDate,
+                  endDate,
+                  guestNumber
+                }
+              });}}
             />
-            </div>
+            </VisibilitySensor>
             )}
           </div>
           {/* Pagination section */}
@@ -124,13 +123,13 @@ console.log(searchResults)
         </section>}
         <section className={` lg:inline-flex ${!showList ?"w-full flex-1":"xl:min-w-[600px] hidden"}  h-[90vh] sticky top-16 transition duration-200`}>
           { !reloadMap && <Map 
-          setShowList={setShowList}
-           showList={showList}
-          searchResults={slicedData}
+             setShowList={setShowList}
+             showList={showList}
+             searchResults={slicedData}
              hoverItem={hoverItem}
-             setWindowPosition={setWindowPosition}
-             windowPostion={windowPostion}
-             />}
+             elemInView={elemInView}
+             />
+          }
         </section>
       </main>:
       <div className="flex items-center justify-center h-[70vh]">

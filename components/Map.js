@@ -5,7 +5,7 @@ import getCenter from "geolib/es/getCenter"
 import ModalCard from "./ModalCard"
 import {ChevronLeftIcon,ChevronRightIcon,PlusIcon,MinusIcon} from "@heroicons/react/solid"
 
-function Map({searchResults,hoverItem,setShowList,showList,windowPostion,setWindowPosition}) {
+function Map({searchResults,hoverItem,setShowList,showList,elemInView}) {
 
   const coords = searchResults?.map(item=>({
     longitude:item?.hotel?.longitude,
@@ -72,7 +72,8 @@ function Map({searchResults,hoverItem,setShowList,showList,windowPostion,setWind
         onClick={()=>{
           // document.body.setAttribute("style","");
           // window.scrollTo(0,refTop?.current?.windOffset);
-          setShowList(!showList)
+          setShowList(!showList);
+          elemInView && document?.getElementById(elemInView)?.scrollIntoView();
           //window.scrollTo({ top: windowPostion, behavior: "smooth" });     
         }}
         >

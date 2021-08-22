@@ -58,7 +58,7 @@ function Header({placeholder}) {
       <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent overflow-hidden ">
         <input
           type="text"
-          placeholder={placeholder||"Search by City"}
+          placeholder={placeholder||"Start your search"}
           className="md:pl-5 px-2 md:pr-0  bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black w-11/12 truncate md:w-auto"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}

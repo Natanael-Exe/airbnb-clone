@@ -1,26 +1,39 @@
 import { format } from "date-fns";
-import { HeartIcon,ChevronDownIcon } from "@heroicons/react/outline";
+import { HeartIcon,ChevronDownIcon,ChevronUpIcon,PlusSmIcon,MinusSmIcon } from "@heroicons/react/outline";
 import {GiCutDiamond} from "react-icons/gi"
 import {MdFlag} from "react-icons/md"
 import { useState } from "react";
+import {useRouter} from "next/router"
+import GuestModal from "./GuestModal"
+import { StarIcon } from "@heroicons/react/solid";
 
-const Reservation=({pricePerNight,startDate,endDate,guestNumber,numberOfNights,weeklyDiscount,total})=>{
+const Reservation=({pricePerNight,startDate,endDate,numberOfNights,weeklyDiscount,total,rating})=>{
+  const router=useRouter();
+  const {guestNumber}=router.query;
+
   const [isButtonFocused,setIsButtonFocused]=useState(false);
-
+  const [showGuestDropDown,setShowGuestDropDown]=useState(false);
+  const [adults,setAdults]=useState(1);
+  const [childrens,setChildrens]=useState(0);
+  const [infants,setInfants]=useState(0);
   return(
     <>
       <div className="shadow-lg border rounded-xl p-6  z-20 ">
                <div className="flex justify-between">
-                 <p className="font-light ">
+                 <p className="font-light flex-shrink-0">
                    <span className="font-semibold text-lg">
                      ${pricePerNight}
                   </span> / night</p>
-                 <p className="underline text-gray-600 text-sm">2 reviews</p>
+                 <p className="inline-flex items-center flex-shrink-0  text-sm"> 
+                  <StarIcon className="h-5 w-5 text-red-500 mr-0.5" />
+                  {rating}
+                  <span className="underline text-gray-600 ml-2">(2 reviews)</span>
+                 </p>
                </div>
 
               <div className="border rounded-md mt-4 border-gray-400 group">
                 <button className={`${isButtonFocused ?"":"border-b" }  group-focus:border-none focus:border-2 focus:border-black focus:rounded-md flex items-center cursor-pointer border-gray-400 w-full`}
-                
+                onClick={()=>document?.getElementById('date-range-picker')?.scrollIntoView()}
                 >
                   <div className="py-2 px-4 flex-grow  border-r border-gray-400 text-left">
                     <h4 className="uppercase text-xs font-semibold mb-1">Check-in</h4>
@@ -32,17 +45,38 @@ const Reservation=({pricePerNight,startDate,endDate,guestNumber,numberOfNights,w
                   </div>
                 </button>
 
-                <button className="focus:border-2 focus:border-black rounded-md flex items-center cursor-pointer border-gray-400 w-full justify-between"
+                <button className="focus:border-2 focus:border-black rounded-md flex items-center cursor-pointer border-gray-400 w-full justify-between relative"
+                onClick={()=>setShowGuestDropDown(prevState=>!prevState)}
                 onFocus={()=>setIsButtonFocused(true)}
                 onBlur={()=>setIsButtonFocused(false)}
                 //ref={guestNumberRef}
                 >
                   <div className="text-left px-4 py-2">
                   <h4 className="uppercase text-xs font-semibold mb-1">Guest</h4>
-                  <p className="font-light text-sm">{guestNumber} guests</p>
+                  <p className="font-light text-sm">
+                    {adults} guests{childrens>0 && `, ${childrens} children`}{infants>0 && `, ${infants} infant(s)`}
+                  </p>
                   </div>
-                 <ChevronDownIcon className="h-6 w-6 mr-4"/>
+                  {showGuestDropDown
+                  ? <ChevronUpIcon className="h-6 w-6 mr-4"/> 
+                  :
+                  <ChevronDownIcon className="h-6 w-6 mr-4"/>
+                  }
+                 
                 </button>
+                <div className="relative -mx-0.5">
+
+                {showGuestDropDown &&  
+                <GuestModal
+                 setShowGuestDropDown={setShowGuestDropDown}
+                 adults={adults}
+                 setAdults={setAdults}
+                 childrens={childrens}
+                 setChildrens={setChildrens}
+                 infants={infants}
+                 setInfants={setInfants}
+                 />}
+                </div>
               </div>
 
              <button className="text-center w-full rounded-lg my-4 py-3 text-white bg-gradient-to-r from-red-500 to-pink-700">Reserve</button>
