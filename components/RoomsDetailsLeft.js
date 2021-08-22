@@ -56,7 +56,7 @@ const RoomsDetailsLeft = ({
         <UserCircleIcon className="w-16 h-16 text-gray-300" />
       </div>
 
-      <div className="flex flex-col space-y-6 mt-8  pb-4 border-b">
+      <div className="flex flex-col space-y-6 mt-8  pb-6 border-b">
         <div className="flex items-start">
           <BiHome className="h-7 w-7 mr-2 flex-shrink-0" />
           <div>
