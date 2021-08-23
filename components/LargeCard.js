@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function LargeCard({ img, title,subtitle,index }) {
   return (
-    <div className="cursor-pointer hover:scale-105 transition duration-300 ease-out relative">
+    <div className="cursor-pointer md:hover:scale-105 transition duration-300 ease-out relative">
       <div className="relative h-80 w-[23rem]">
         <Image
           src={img}
