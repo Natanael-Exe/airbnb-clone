@@ -10,7 +10,7 @@ export default function Home({exploreData,cardsData}) {
   return (
     <div className="">
       <Head>
-        <title>Home | Airbnb</title>
+        <title>Airbnb: Vaction Rentals, Cabins, Beach Houses, Unique Homes & Experience</title>
         {/* <link rel="icon" href="/favicon.ico" /> */}
         {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> */}
       </Head>

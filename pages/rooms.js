@@ -83,7 +83,7 @@ const Rooms = ({ roomsDetails }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Head>
-        <title>Rooms | Airbnb</title>
+        <title>Airbnb: {roomsDetails?.hotel?.name?.toLowerCase()||""}</title>
         {/* <link rel="icon" href="/favicon.ico" /> */}
         {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> */}
       </Head>
