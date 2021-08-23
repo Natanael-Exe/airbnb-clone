@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { HeartIcon,ChevronDownIcon,ChevronUpIcon,PlusSmIcon,MinusSmIcon } from "@heroicons/react/outline";
+import { ChevronDownIcon,ChevronUpIcon } from "@heroicons/react/outline";
 import {GiCutDiamond} from "react-icons/gi"
 import {MdFlag} from "react-icons/md"
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { StarIcon } from "@heroicons/react/solid";
 
 const Reservation=({pricePerNight,startDate,endDate,numberOfNights,weeklyDiscount,total,rating})=>{
   const router=useRouter();
-  const {guestNumber}=router.query;
+  //const {guestNumber}=router.query;
 
   const [isButtonFocused,setIsButtonFocused]=useState(false);
   const [showGuestDropDown,setShowGuestDropDown]=useState(false);
@@ -104,7 +104,7 @@ const Reservation=({pricePerNight,startDate,endDate,numberOfNights,weeklyDiscoun
               <hr className="py-2 mt-2"/>
               
               <div className="flex items-center justify-between font-semibold">
-                  <p className="cursor-pointer ">Total</p>
+                  <p>Total</p>
                   <p>${total}</p>
               </div>
               </div>

@@ -10,6 +10,7 @@ import Amadeus from "amadeus"
 import VisibilitySensor from 'react-visibility-sensor';
 //import cities from "../utils/cities.json"
 import {MapIcon} from "@heroicons/react/solid";
+import {isIsoDate} from "../lib"
 
 const Search = ({searchResults}) => {
   const [reloadMap,setReloadMap] = useState(false);
@@ -19,11 +20,11 @@ const Search = ({searchResults}) => {
   const [hoverItem,setHoverItem]= useState("");
   const [elemInView,setElemInView] = useState("");
 
-  const formattedStartDate = startDate
+  const formattedStartDate = isIsoDate(startDate)
     ? format(new Date(startDate), "dd MMMM yy")
     : "";
 
-  const formattedEndDate = endDate
+  const formattedEndDate = isIsoDate(endDate) 
     ? format(new Date(endDate), "dd MMMM yy")
     : "";
 
@@ -148,6 +149,12 @@ export default Search;
 export const getServerSideProps  = async ({query})=>{
   const {location}=query;
 
+  if(!location){
+    return {
+      notFound: true,
+    }
+  }
+
   const coordonates = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${process.env.GOOGLE_PLACE_GOCODING_API_KEY}`).then(response => response.json()).catch(err => console.log(err))
 
   let hotelOffers;
@@ -178,7 +185,6 @@ export const getServerSideProps  = async ({query})=>{
    }else{
     hotelOffers = []
    }
-  
 
  return{
    props:{

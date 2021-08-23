@@ -1,11 +1,10 @@
 import Amadeus from "amadeus";
-import { useState, useRef,useEffect } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
 import Head from "next/head";
-import { StarIcon } from "@heroicons/react/solid";
 import VisibilitySensor from "react-visibility-sensor";
-
+import {isIsoDate} from "../lib"
 import Reservation from "../components/Reservation";
 import Footer from "../components/Footer";
 import Reviews from "../components/Reviews";
@@ -13,7 +12,7 @@ import RoomMap from "../components/RoomMap";
 import Gallery from "../components/Gallery";
 import Header from "../components/Header";
 import RoomsDetailsLeft from "../components/RoomsDetailsLeft";
-
+import { StarIcon } from "@heroicons/react/solid";
 import { FiShare } from "react-icons/fi";
 import { HeartIcon } from "@heroicons/react/outline";
 
@@ -28,13 +27,15 @@ const Rooms = ({ roomsDetails }) => {
     guestNumber,
   } = router.query;
 
-  const [startDate, setStartDate] = useState(new Date(userStartDate));
-  const [endDate, setEndDate] = useState(new Date(userEndDate));
+  const [startDate, setStartDate] = useState( isIsoDate(userStartDate) ? new Date(userStartDate):new Date());
+
+  const [endDate, setEndDate] = useState(isIsoDate(userEndDate) ? new Date(userEndDate):new Date());
+
   const [showButtonReservation, setShowButtonReservation] = useState(true);
 
-  const formattedStartDate = startDate ? format(startDate, "dd MMMM yy") : "";
+  const formattedStartDate = format(startDate, "dd MMMM yy") || "";
 
-  const formattedEndDate = endDate ? format(endDate, "dd MMMM yy") : "";
+  const formattedEndDate = format(endDate, "dd MMMM yy") || "";
 
   const selectDateRange = {
     startDate,
@@ -59,27 +60,6 @@ const Rooms = ({ roomsDetails }) => {
       ? pricePerNight * numberOfNights - weeklyDiscount
       : pricePerNight * numberOfNights;
 
-      // useEffect(() => {
-      //   const elem = document.querySelector('#reservation');
-      //   const bounding = elem.getBoundingClientRect();
-
-      //   const handleEvent = () => {
-      //     window.addEventListener("scroll", () => {
-      //       if (window.scrollY > 50) {
-      //         console.log(bounding)
-      //         console.log("test 1")
-      //       } else {
-      //         console.log("test 2")
-      //       }
-      //     });
-      //   };
-      //   handleEvent();
-    
-      //   return () => {
-      //     window.removeEventListener("scroll", handleEvent);
-      //   };
-      // },[])
-
   return (
     <div className="min-h-screen flex flex-col">
       <Head>
@@ -94,10 +74,15 @@ const Rooms = ({ roomsDetails }) => {
           <h1 className="text-3xl font-medium pb-1 capitalize">
             {roomsDetails?.hotel?.name?.toLowerCase()}
           </h1>
+
           <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-500 underline truncate cursor-pointer">
-              2 reviews,{" "}
-              <span className="capitalize">
+            <p className="text-sm text-gray-500  truncate cursor-pointer inline-flex items-center flex-shrink-0">
+              
+              {roomsDetails?.hotel?.rating &&<> <StarIcon className="h-5 w-5 text-red-500 mr-0.5" />
+              <span className="text-black">{roomsDetails?.hotel?.rating}</span></>}
+              <span className="underline text-gray-500 mr-2 ml-1">(2 reviews)</span>
+                  ·
+              <span className="capitalize underline ml-2">
                 {roomsDetails?.hotel?.address?.lines[0]?.toLowerCase()},{" "}
                 {roomsDetails?.hotel?.address?.cityName?.toLowerCase()}{" "}
               </span>
@@ -210,6 +195,12 @@ export default Rooms;
 export const getServerSideProps = async ({ query }) => {
   const { hotelId } = query;
 
+  if(!hotelId){
+    return {
+      notFound: true,
+    }
+  }
+  
   let roomsDetails;
 
   const amadeus = new Amadeus({
@@ -231,6 +222,7 @@ export const getServerSideProps = async ({ query }) => {
     // })
     .catch((err) => console.log(err));
 
+    
   return {
     props: {
       roomsDetails: roomsDetails || [],

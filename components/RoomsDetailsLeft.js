@@ -1,8 +1,5 @@
 import { DateRangePicker } from "react-date-range";
-import { FiShare } from "react-icons/fi";
-import { BsGrid3X3Gap } from "react-icons/bs";
 import { BiHome, BiBadgeCheck } from "react-icons/bi";
-import Image from "next/image";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import { AiOutlineClear, AiOutlineCalendar } from "react-icons/ai";
 import { RiDoorClosedLine } from "react-icons/ri";
@@ -10,10 +7,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { format } from "date-fns";
 import { FaRegKeyboard } from "react-icons/fa";
-import {
+import { ChevronRightIcon } from "@heroicons/react/outline";
 
-  ChevronRightIcon,
-} from "@heroicons/react/outline";
 
 const RoomsDetailsLeft = ({
   roomsDetails,
@@ -30,12 +25,13 @@ const RoomsDetailsLeft = ({
   const [showMore, setShowMore] = useState(false);
   const [showMoreAminities, setShowMoreAminities] = useState(false);
   const cancelDate = roomsDetails?.offers[0]?.policies?.cancellation?.deadline;
-  const formatedCancelDate = cancelDate
+  const formatedCancelDate = cancelDate 
     ? format(new Date(cancelDate), "MMM dd")
     : "";
 
-    const amenities = showMoreAminities ? roomsDetails?.hotel?.amenities : roomsDetails?.hotel?.amenities?.slice(0, 10);
-
+  const amenities = showMoreAminities
+    ? roomsDetails?.hotel?.amenities
+    : roomsDetails?.hotel?.amenities?.slice(0, 10);
 
   return (
     <>
@@ -46,10 +42,11 @@ const RoomsDetailsLeft = ({
           </h2>
           <p className="font-light">
             <span>{guestNumber} guests</span> ·{" "}
-            <span >
+            <span>
               {roomsDetails?.offers[0].room.typeEstimated?.beds} bedroom
             </span>{" "}
-            · {" "}<span >{roomsDetails?.offers[0].room.typeEstimated?.beds} bed</span>{" "}
+            ·{" "}
+            <span>{roomsDetails?.offers[0].room.typeEstimated?.beds} bed</span>{" "}
             · 1 batch
           </p>
         </div>
@@ -62,7 +59,7 @@ const RoomsDetailsLeft = ({
           <div>
             <h3 className=" font-medium">Entire home</h3>
             <p className="text-sm font-light text-gray-500 mt-1">
-            You’ll have the serviced apartment to yourself.
+              You’ll have the serviced apartment to yourself.
             </p>
           </div>
         </div>
@@ -107,18 +104,20 @@ const RoomsDetailsLeft = ({
         <li>- Desk space</li>
         <li>- Gym, laundry available on site</li>
       </ul> */}
-      {roomsDetails?.hotel?.description?.text && <div className="mt-6 pb-6 border-b">
-       <p className={`font-light my-3 ${!showMore ? "clamp-3" : ""}`}>
+      {roomsDetails?.hotel?.description?.text && (
+        <div className="mt-6 pb-6 border-b">
+          <p className={`font-light my-3 ${!showMore ? "clamp-3" : ""}`}>
             {roomsDetails?.hotel?.description?.text}
           </p>
           <p
             className="inline-flex underline items-center cursor-pointer"
             onClick={() => setShowMore((prevState) => !prevState)}
           >
-            {showMore ?"Show less":"Show more"} <ChevronRightIcon className="w-5 h-5 ml-1" />
-        </p> 
-      </div>}
-      
+            {showMore ? "Show less" : "Show more"}{" "}
+            <ChevronRightIcon className="w-5 h-5 ml-1" />
+          </p>
+        </div>
+      )}
 
       <div className="mt-12 pb-6 border-b">
         <h2 className="text-xl font-medium  mb-6">What this place offers</h2>
@@ -129,13 +128,18 @@ const RoomsDetailsLeft = ({
               key={item}
             >
               <BiBadgeCheck className="w-6 h-6 mr-2 flex-shrink-0" />
-              <p>{item?.split('_')?.join(' ')?.toLowerCase()}</p>
+              <p>{item?.split("_")?.join(" ")?.toLowerCase()}</p>
             </div>
           ))}
           <div className="mt-4 pb-6 col-span-2">
             {roomsDetails?.hotel?.amenities.length && (
-              <p className="px-4 py-2 rounded-md border border-black  inline cursor-pointer hover:underline" onClick={()=>setShowMoreAminities(prev=>!prev)}>
-                {showMoreAminities?"Show less":`Show all ${roomsDetails?.hotel?.amenities.length} amenities`}
+              <p
+                className="px-4 py-2 rounded-md border border-black  inline cursor-pointer hover:underline"
+                onClick={() => setShowMoreAminities((prev) => !prev)}
+              >
+                {showMoreAminities
+                  ? "Show less"
+                  : `Show all ${roomsDetails?.hotel?.amenities.length} amenities`}
               </p>
             )}
           </div>

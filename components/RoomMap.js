@@ -11,7 +11,7 @@ import { HiHome } from "react-icons/hi";
 import {ImMan} from "react-icons/im";
 
 const RoomMap=({roomsDetails})=> {
-    const [isChecked,setIsChecked] = useState(true);
+    const [isChecked,setIsChecked] = useState(false);
     const [viewport, setViewport] = useState({
     longitude: roomsDetails?.hotel?.longitude,
     latitude: roomsDetails?.hotel?.latitude,
@@ -26,7 +26,7 @@ const RoomMap=({roomsDetails})=> {
   return (
     <>
        <h2 className="text-xl font-medium ">Where you’ll be</h2>
-          <div className="w-full xl:min-w-[600px] md:h-[70vh] h-[50vh] pt-4 pb-8">
+          <div className="w-full xl:min-w-[600px] md:h-[70vh] h-[50vh] pt-4 pb-8  ">
             <ReactMapGL
               width="100%"
               height= "100%"
@@ -37,11 +37,11 @@ const RoomMap=({roomsDetails})=> {
               }}
               mapStyle={process.env.site_url}
               mapboxApiAccessToken={process.env.mapbox_key}
-              className="relative"
+              className="relative rounded-xl md:rounded-none"
               //ref={refTop}
               onStyleLoad={(map)=>onLoaded(map)}
             >
-              <div className="absolute p-6 drop-shadow-md top-0 right-0 z-30 flex items-start">
+              <div className="absolute p-6 drop-shadow-md top-0 right-0 z-30 md:flex items-start hidden ">
                   <div className="flex py-2 px-4 bg-white rounded-lg items-center text-sm text-light mr-4">
                     <input type="checkbox" 
                     defaultChecked={isChecked}
