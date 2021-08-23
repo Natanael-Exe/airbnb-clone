@@ -47,7 +47,7 @@ function Header({placeholder}) {
       {/* left */}
       <div className="relative flex items-center h-10 cursor-pointer my-auto pr-2 md:pr-0 w-10/12 md:w-auto" >
         <Image
-          src="https://links.papareact.com/qd3"
+          src="/airbnb_logo.png"
           layout="fill"
           objectFit="contain"
           objectPosition="left"

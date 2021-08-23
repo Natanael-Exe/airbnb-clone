@@ -150,7 +150,6 @@ export const getServerSideProps  = async ({query})=>{
 
   const coordonates = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${process.env.GOOGLE_PLACE_GOCODING_API_KEY}`).then(response => response.json()).catch(err => console.log(err))
 
-  //console.log(coordonates?.results[0]?.geometry?.location)
   let hotelOffers;
 
    if(coordonates?.results.length){
@@ -180,15 +179,6 @@ export const getServerSideProps  = async ({query})=>{
     hotelOffers = []
    }
   
-
-    // let city = cities.find(item =>item?.City?.toLowerCase().includes(location?.toLowerCase()));
-
-   
-  //const searchResult = response?.data 
-  //console.log(hotelOffers)
-
-//  const searchResults = await fetch('https://links.papareact.com/isz')
-//  .then(res=>res.json())||[]
 
  return{
    props:{

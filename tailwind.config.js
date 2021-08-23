@@ -7,6 +7,12 @@ module.exports = {
       fontFamily: {
         sans: ["Circular", "sans-serif"],
       },
+      spacing:{
+        '112':'26rem',
+        '120':'30.5rem',
+        '128': '32rem',
+        '144': '36rem',
+      }
     },
   },
   variants: {

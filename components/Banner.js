@@ -1,19 +1,33 @@
 import Image from "next/image";
-function Banner() {
+
+function Banner({ imgPc,imgMobible, title, description, buttonText }) {
   return (
-    <div className="relative h-[300px] md:h-[70vh]">
-      <Image
-        src="https://links.papareact.com/0fm"
-        layout="fill"
-        objectFit="cover"
-      />
-      <div className="absolute top-1/2 w-full text-center -mt-4">
-        <p className="font-medium text-lg"> Not sure where you go? Perfect.</p>
-        <button className=" bg-white px-12 py-4  rounded-full shadow-lg  my-4 hover:shadow-xl active:scale-90 transition duraction-150 
-        
-        ">
-          <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-800 to-pink-700">I'm flexible</span>
-          
+    <div className="relative mt-6">
+      <div className="relative h-96 min-w-[300px] hidden md:block">
+        <Image
+          src={imgPc}
+          blurDataURL={imgPc}
+          placeholder="blur"
+          layout="fill"
+          className="rounded-2xl"
+          objectFit="cover"
+          quality={100}
+        />
+      </div>
+      <div className="relative h-120 md:min-w-[300px] md:hidden block"> 
+        <img
+          src={imgMobible}
+          layout="fill"
+          className="rounded-2xl w-full h-full object-cover"
+          objectFit="cover"
+          quality={100}
+        />
+      </div>
+      <div className="absolute md:top-24 md:left-20 top-6 xs:inset-x-0 mx-auto text-center md:text-left">
+        <h3 className="md:text-5xl text-3xl  md:mb-3 mt-1 md:w-64 text-white">{title}</h3>
+        <p className="text-white mt-4 md:text-lg text-base md:w-7/12 font-light w-10/12 mx-auto md:mx-0">{description}</p>
+        <button className="font-medium bg-white text-gray-900 md:py-3 py-2 px-4 rounded-lg md:mt-8 mt-6">
+          {buttonText}
         </button>
       </div>
     </div>
