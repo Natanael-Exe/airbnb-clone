@@ -28,6 +28,7 @@ function Map({searchResults,hoverItem,setShowList,showList,elemInView}) {
   });
 
   
+  
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowModal);
 
