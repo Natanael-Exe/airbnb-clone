@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { format } from "date-fns";
 import Head from "next/head";
 import VisibilitySensor from "react-visibility-sensor";
-import {isIsoDate} from "../lib"
+import { isIsoDate } from "../lib";
 import Reservation from "../components/Reservation";
 import Footer from "../components/Footer";
 import Reviews from "../components/Reviews";
@@ -27,9 +27,13 @@ const Rooms = ({ roomsDetails }) => {
     guestNumber,
   } = router.query;
 
-  const [startDate, setStartDate] = useState( isIsoDate(userStartDate) ? new Date(userStartDate):new Date());
+  const [startDate, setStartDate] = useState(
+    isIsoDate(userStartDate) ? new Date(userStartDate) : new Date()
+  );
 
-  const [endDate, setEndDate] = useState(isIsoDate(userEndDate) ? new Date(userEndDate):new Date());
+  const [endDate, setEndDate] = useState(
+    isIsoDate(userEndDate) ? new Date(userEndDate) : new Date()
+  );
 
   const [showButtonReservation, setShowButtonReservation] = useState(true);
 
@@ -42,7 +46,7 @@ const Rooms = ({ roomsDetails }) => {
     endDate,
     key: "selection",
   };
-   
+
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection?.startDate);
     setEndDate(ranges.selection?.endDate);
@@ -63,7 +67,7 @@ const Rooms = ({ roomsDetails }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Head>
-        <title>Airbnb: {roomsDetails?.hotel?.name?.toLowerCase()||""}</title>
+        <title>Airbnb: {roomsDetails?.hotel?.name?.toLowerCase() || ""}</title>
         {/* <link rel="icon" href="/favicon.ico" /> */}
         {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> */}
       </Head>
@@ -77,11 +81,18 @@ const Rooms = ({ roomsDetails }) => {
 
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-500  truncate cursor-pointer inline-flex items-center flex-shrink-0">
-              
-              {roomsDetails?.hotel?.rating &&<> <StarIcon className="h-5 w-5 text-red-500 mr-0.5" />
-              <span className="text-black">{roomsDetails?.hotel?.rating}</span></>}
-              <span className="underline text-gray-500 mr-2 ml-1">(2 reviews)</span>
-                  ·
+              {roomsDetails?.hotel?.rating && (
+                <span className="hidden md:flex items-center">
+                  <StarIcon className="h-5 w-5 text-red-500 mr-0.5" />
+                  <span className="text-black">
+                    {roomsDetails?.hotel?.rating}
+                  </span>
+                </span>
+              )}
+              <span className="underline text-gray-500 mr-2 ml-1 hidden md:inline">
+                (2 reviews)
+              </span>
+              <span className="hidden md:inline"> · </span>
               <span className="capitalize underline ml-2">
                 {roomsDetails?.hotel?.address?.lines[0]?.toLowerCase()},{" "}
                 {roomsDetails?.hotel?.address?.cityName?.toLowerCase()}{" "}
@@ -106,7 +117,7 @@ const Rooms = ({ roomsDetails }) => {
         {/* author and price section */}
         <section className="mt-10">
           <div className="md:flex md:space-x-20">
-            <div className="lg:w-7/12 md:w-6/12" >
+            <div className="lg:w-7/12 md:w-6/12">
               <RoomsDetailsLeft
                 selectDateRange={selectDateRange}
                 formattedStartDate={formattedStartDate}
@@ -118,19 +129,18 @@ const Rooms = ({ roomsDetails }) => {
                 setEndDate={setEndDate}
               />
             </div>
-            <div id="reservation" className="md:hidden block"/>
+            <div id="reservation" className="md:hidden block" />
             <VisibilitySensor
-            scrollCheck
-            partialVisibility
+              scrollCheck
+              partialVisibility
               onChange={(isVisible) =>
                 !isVisible && setShowButtonReservation(true)
               }
             >
               <div
                 className={`lg:w-5/12 md:w-6/12  self-start sticky top-24 mt-6 md:mt-0 ${
-                  showButtonReservation ? "hidden": "block"
+                  showButtonReservation ? "hidden" : "block"
                 } md:block`}
-                
               >
                 <Reservation
                   pricePerNight={pricePerNight}
@@ -175,7 +185,11 @@ const Rooms = ({ roomsDetails }) => {
               className="px-6 py-3  text-white rounded-lg bg-gradient-to-r from-red-600 to-pink-700 mr-2"
               onClick={() => {
                 setShowButtonReservation(false);
-                document?.getElementById("reservation")?.scrollIntoView({behavior: "smooth", block: "start", inline: "center"});
+                document?.getElementById("reservation")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                  inline: "center",
+                });
               }}
             >
               Reserve
@@ -195,12 +209,12 @@ export default Rooms;
 export const getServerSideProps = async ({ query }) => {
   const { hotelId } = query;
 
-  if(!hotelId){
+  if (!hotelId) {
     return {
       notFound: true,
-    }
+    };
   }
-  
+
   let roomsDetails;
 
   const amadeus = new Amadeus({
@@ -222,7 +236,6 @@ export const getServerSideProps = async ({ query }) => {
     // })
     .catch((err) => console.log(err));
 
-    
   return {
     props: {
       roomsDetails: roomsDetails || [],
