@@ -87,7 +87,7 @@ function Header({placeholder}) {
             minDate={new Date()}
             rangeColors={["#FD5B61"]}
             onChange={handleSelect}
-            className="flex md:block  flex-col-reverse md:flex-row md:h-[60vh] h-auto"
+            className="flex md:block  flex-col-reverse md:flex-row "
             //showMonthAndYearPickers={false}
           />
           <div className="flex items-center mt-2 border-b mb-4">
