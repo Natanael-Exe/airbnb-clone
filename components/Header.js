@@ -19,7 +19,6 @@ function Header({placeholder}) {
   const [guestNumber, setGustNumber] = useState(1);
 
   const router = useRouter();
-  const {location} = router.query
     const selectDateRange = {
       startDate,
       endDate,
@@ -58,6 +57,7 @@ function Header({placeholder}) {
       <div className="rounded-full flex items-center md:border  py-2 md:shadow-sm cursor-pointer md:hover:shadow-md bg-gray-100 md:bg-transparent overflow-hidden ">
         <input
           type="text"
+          data-testid="search-input"
           placeholder={placeholder||"Start your search"}
           className="md:pl-5 px-2 md:pr-0  bg-transparent outline-none flex-grow text-sm text-gray-600 placeholder-black w-11/12 truncate md:w-auto"
           value={searchInput}
@@ -87,6 +87,7 @@ function Header({placeholder}) {
             minDate={new Date()}
             rangeColors={["#FD5B61"]}
             onChange={handleSelect}
+            data-testid="date-range-picker"
             className="flex md:block  flex-col-reverse md:flex-row "
             //showMonthAndYearPickers={false}
           />
@@ -100,12 +101,15 @@ function Header({placeholder}) {
               defaultValue={guestNumber}
               onChange={(e) => setGustNumber(e.target.value)}
               min={1}
+              data-testid="number-guest"
               className="outline-none pl-2 bg-transparent w-12 text-red-400"
             />
           </div>
           <div className="flex items-center justify-between">
             <button className="text-gray-500 hover:text-gray-700 py-2 px-4 flex-grow" onClick={resetInput}>Cancel</button>
-            <button className="bg-red-400 text-white hover:bg-red-500 rounded-full py-2 px-4 flex-grow" onClick={()=>{router.push({
+            <button
+            data-testid="search-btn"
+            className="bg-red-400 text-white hover:bg-red-500 rounded-full py-2 px-4 flex-grow" onClick={()=>{router.push({
               pathname:"/search",
               query:{
                 location:searchInput,
