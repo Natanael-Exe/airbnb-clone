@@ -114,6 +114,7 @@ function Header({ placeholder }) {
               direction="horizontal"
               moveRangeOnFirstSelection={false}
               editableDateInputs={true}
+              weekdayDisplayFormat="EEEEEE"
               onChange={handleSelect}
               data-testid="date-range-picker"
               className="flex md:block  flex-col-reverse md:flex-row "

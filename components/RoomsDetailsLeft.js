@@ -182,6 +182,7 @@ const RoomsDetailsLeft = ({
           months={dimensions?.width > 600 ? 2 : 1}
           moveRangeOnFirstSelection={false}
           editableDateInputs={true}
+          weekdayDisplayFormat="EEEEEE"
           direction="horizontal"
           onChange={handleSelect}
           className="flex md:block  flex-col-reverse md:flex-row w-full"

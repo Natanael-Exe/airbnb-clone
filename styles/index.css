@@ -19,7 +19,11 @@
 .rdrCalendarWrapper.rdrDateRangeWrapper {
   width: 100%;
 }
-
+.rdrDayNumber{
+  color:black !important;
+  font-weight:500 !important;
+  font-size:14px !important
+}
 /* .rdrMonth {
   width: auto !important;
 } */
