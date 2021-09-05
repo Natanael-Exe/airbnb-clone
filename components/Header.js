@@ -112,8 +112,8 @@ function Header({ placeholder }) {
               rangeColors={["#FD5B61"]}
               months={dimensions.width > 700 ? 2 : 1}
               direction="horizontal"
-              //moveRangeOnFirstSelection={false}
-              //editableDateInputs={true}
+              moveRangeOnFirstSelection={false}
+              editableDateInputs={true}
               onChange={handleSelect}
               data-testid="date-range-picker"
               className="flex md:block  flex-col-reverse md:flex-row "
