@@ -7,7 +7,7 @@ function Hero() {
         src={imageHero}
         placeholder="blur"
         layout="fill"
-        objectfit="cover"
+        objectFit="cover"
         
       />
       <div className="absolute top-1/2 w-full text-center -mt-4">
