@@ -4,7 +4,7 @@ import { UserCircleIcon } from "@heroicons/react/solid";
 import { AiOutlineClear, AiOutlineCalendar } from "react-icons/ai";
 import { RiDoorClosedLine } from "react-icons/ri";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { format } from "date-fns";
 import { FaRegKeyboard } from "react-icons/fa";
 import { ChevronRightIcon } from "@heroicons/react/outline";
@@ -24,7 +24,13 @@ const RoomsDetailsLeft = ({
   const { guestNumber } = router.query;
   const [showMore, setShowMore] = useState(false);
   const [showMoreAminities, setShowMoreAminities] = useState(false);
+  const [dimensions, setDimensions] = useState({
+    height: typeof window !== "undefined" ? window.innerHeight : 500,
+    width:typeof window !== "undefined" ?  window.innerWidth:300,
+  });
+
   const cancelDate = roomsDetails?.offers[0]?.policies?.cancellation?.deadline;
+
   const formatedCancelDate = cancelDate 
     ? format(new Date(cancelDate), "MMM dd")
     : "";
@@ -32,6 +38,22 @@ const RoomsDetailsLeft = ({
   const amenities = showMoreAminities
     ? roomsDetails?.hotel?.amenities
     : roomsDetails?.hotel?.amenities?.slice(0, 10);
+
+
+    useEffect(() => {
+      function handleResize() {
+        typeof window !== "undefined" &&
+        setDimensions({
+          height: window.innerHeight,
+          width: window.innerWidth,
+        });
+      }
+  
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    });
 
   return (
     <>
@@ -157,6 +179,8 @@ const RoomsDetailsLeft = ({
           ranges={[selectDateRange]}
           minDate={new Date()}
           rangeColors={["#FD5B61"]}
+          months={dimensions?.width > 600 ? 2 : 1}
+          direction="horizontal"
           onChange={handleSelect}
           className="flex md:block  flex-col-reverse md:flex-row w-full"
           //showMonthAndYearPickers={false}
